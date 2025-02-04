@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.jco.dogapi.navigation.NavManager
 import com.jco.dogapi.ui.theme.DogApiTheme
 import com.jco.dogapi.viewModel.DogViewModel
 import com.jco.dogapi.views.DogScreen
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
             DogApiTheme (
                 darkTheme=darkMode.value
             ) {
-                DogScreen(viewModel, darkModeStore, darkMode.value)
+                NavManager(viewModel = viewModel, darkModeStore, darkMode.value)
             }
         }
     }

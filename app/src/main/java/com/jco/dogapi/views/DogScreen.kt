@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.jco.dogapi.components.ButtonMode
 import com.jco.dogapi.viewModel.DogViewModel
@@ -32,7 +33,7 @@ import com.jco.dogapi.viewModel.DogViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DogScreen(viewModel: DogViewModel, darkModeStore: StoreDarkMode, darkMode:Boolean) {
+fun DogScreen(navController: NavController, viewModel: DogViewModel, darkModeStore: StoreDarkMode, darkMode:Boolean) {
     // Accede al valor de dogImage desde el ViewModel
     val dogImage by viewModel.dogImage.observeAsState()
 
