@@ -1,5 +1,6 @@
 package com.jco.dogapi.views
 
+import StoreDarkMode
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
@@ -24,13 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.jco.dogapi.components.ButtonMode
 import com.jco.dogapi.viewModel.DogViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DogScreen(viewModel: DogViewModel) {
+fun DogScreen(viewModel: DogViewModel, darkModeStore: StoreDarkMode, darkMode:Boolean) {
     // Accede al valor de dogImage desde el ViewModel
     val dogImage by viewModel.dogImage.observeAsState()
 
@@ -39,7 +41,7 @@ fun DogScreen(viewModel: DogViewModel) {
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Random Dog Image") })
+            ButtonMode(darkModeStore, darkMode)
         },
         content = {
             Column(

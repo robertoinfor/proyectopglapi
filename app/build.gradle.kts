@@ -1,8 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -53,8 +54,11 @@ android {
 
 dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.7.7")
+    implementation(libs.androidx.ui.test.android)
+    implementation(libs.androidx.foundation.layout.android)
     val nav_version = "2.6.0"
-
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
     implementation("androidx.navigation:navigation-compose:$nav_version")
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.46.1")
@@ -64,7 +68,8 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.0")
     kapt("androidx.room:room-compiler:2.5.0")
     // Coil para manejo de imágenes
-    implementation("io.coil-kt:coil-compose:2.0.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     // Para el uso de coroutines
