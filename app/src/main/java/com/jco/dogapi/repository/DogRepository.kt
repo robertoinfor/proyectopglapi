@@ -10,7 +10,6 @@ class DogRepository @Inject constructor(
     private val dogApiService: DogApiService,
     private val dogDao: DogDao
 ) {
-
     suspend fun getRandomDogImage(): DogImageResponse {
         val response = dogApiService.getRandomDogImage()
         if (response.isSuccessful) {

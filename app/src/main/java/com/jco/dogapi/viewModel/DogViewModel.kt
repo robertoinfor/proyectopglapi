@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.jco.dogapi.repository.DogRepository
 import com.jco.dogapi.room.DogCacheEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,9 +24,25 @@ class DogViewModel @Inject constructor(private val dogRepository: DogRepository)
         viewModelScope.launch {
             try {
                 val response = dogRepository.getRandomDogImage()
-                _dogImage.postValue(response.message)
+                val imageUrl = response.message
+                _dogImage.postValue(imageUrl)
+
+                val breed = imageUrl.split("/")[4]
+
+                val newDog = DogCacheEntity(url = imageUrl, breed = breed, isFavorite = false)
+
+                dogRepository.insertDog(newDog)
             } catch (e: Exception) {
-                // Manejo de errores
+            }
+        }
+    }
+
+    fun deleteFavoriteDog(imageUrl: String) {
+        viewModelScope.launch {
+            try {
+                dogRepository.deleteDog(imageUrl)
+                getAllFavoriteDogs()
+            } catch (e: Exception) {
             }
         }
     }
@@ -45,14 +60,6 @@ class DogViewModel @Inject constructor(private val dogRepository: DogRepository)
         }
     }
 
-    fun isFavorite(imageUrl: String): LiveData<Boolean> {
-        val favoriteStatus = MutableLiveData<Boolean>()
-        viewModelScope.launch {
-            val dog = dogRepository.getDogByUrl(imageUrl)
-            favoriteStatus.postValue(dog?.isFavorite ?: false)
-        }
-        return favoriteStatus
-    }
 
     fun getAllFavoriteDogs() {
         viewModelScope.launch {

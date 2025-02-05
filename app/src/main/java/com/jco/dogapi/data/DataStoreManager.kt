@@ -9,8 +9,6 @@ import javax.inject.Inject
 val Context.dataStore by preferencesDataStore(name = "settings")
 
 class DataStoreManager @Inject constructor(private val context: Context) {
-
-    // Usamos la propiedad delegada para obtener la instancia de DataStore
     private val dataStore = context.dataStore
 
     val darkModeFlow: Flow<Boolean> = dataStore.data

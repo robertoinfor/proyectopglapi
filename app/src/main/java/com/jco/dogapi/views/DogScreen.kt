@@ -29,7 +29,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.jco.dogapi.components.ButtonMode
 import com.jco.dogapi.components.TitleBar
 import com.jco.dogapi.viewModel.DogViewModel
 
@@ -38,16 +37,13 @@ import com.jco.dogapi.viewModel.DogViewModel
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun DogScreen(navController: NavController, viewModel: DogViewModel, darkModeStore: StoreDarkMode, darkMode:Boolean) {
-    // Accede al valor de dogImage desde el ViewModel
     val dogImage by viewModel.dogImage.observeAsState()
-
-    // Obtener el contexto para lanzar el intent
     val context = LocalContext.current
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { TitleBar(name = "Random Dog Image") }
+                title = { TitleBar(name = "Random Dog Image", darkModeStore, darkMode) }
             )
         },
         content = {
@@ -57,30 +53,22 @@ fun DogScreen(navController: NavController, viewModel: DogViewModel, darkModeSto
                 verticalArrangement = Arrangement.Center
             ) {
                 dogImage?.let { imageUrl ->
-                    // Mostrar la imagen del perro
                     Image(
                         painter = rememberImagePainter(imageUrl),
                         contentDescription = "Dog Image",
                         modifier = Modifier.fillMaxWidth().height(300.dp))
 
-                    // Botón para abrir el navegador con el enlace de la imagen
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(onClick = {
-                        // Al hacer clic, abre el navegador con la URL de la imagen
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(imageUrl))
                         context.startActivity(intent)
                     }) {
                         Text("Ver Imagen en Navegador")
                     }
-
-                    val isFavorite by viewModel.isFavorite(imageUrl).observeAsState(initial = false)
-                    // Botón para marcar/desmarcar como favorito
                     Button(onClick = { viewModel.toggleFavorite(imageUrl) }) {
-                        Text(if (isFavorite) "Eliminar de Favoritos" else "Añadir a Favoritos")
+                        Text("Añadir a Favoritos")
                     }
                 }
-
-
 
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(onClick = { viewModel.fetchRandomDogImage() }) {
@@ -89,8 +77,6 @@ fun DogScreen(navController: NavController, viewModel: DogViewModel, darkModeSto
                 Button(onClick = { navController.navigate("favorites") }) {
                     Text("Ver imágenes favoritas")
                 }
-                ButtonMode(darkModeStore, darkMode)
-
             }
         }
     )
