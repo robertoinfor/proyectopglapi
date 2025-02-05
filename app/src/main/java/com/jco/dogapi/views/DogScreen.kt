@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.jco.dogapi.components.ButtonMode
+import com.jco.dogapi.components.TitleBar
 import com.jco.dogapi.viewModel.DogViewModel
 
 
@@ -42,7 +46,9 @@ fun DogScreen(navController: NavController, viewModel: DogViewModel, darkModeSto
 
     Scaffold(
         topBar = {
-            ButtonMode(darkModeStore, darkMode)
+            CenterAlignedTopAppBar(
+                title = { TitleBar(name = "Random Dog Image") }
+            )
         },
         content = {
             Column(
@@ -66,12 +72,25 @@ fun DogScreen(navController: NavController, viewModel: DogViewModel, darkModeSto
                     }) {
                         Text("Ver Imagen en Navegador")
                     }
+
+                    val isFavorite by viewModel.isFavorite(imageUrl).observeAsState(initial = false)
+                    // Botón para marcar/desmarcar como favorito
+                    Button(onClick = { viewModel.toggleFavorite(imageUrl) }) {
+                        Text(if (isFavorite) "Eliminar de Favoritos" else "Añadir a Favoritos")
+                    }
                 }
+
+
 
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(onClick = { viewModel.fetchRandomDogImage() }) {
                     Text("Fetch New Image")
                 }
+                Button(onClick = { navController.navigate("favorites") }) {
+                    Text("Ver imágenes favoritas")
+                }
+                ButtonMode(darkModeStore, darkMode)
+
             }
         }
     )

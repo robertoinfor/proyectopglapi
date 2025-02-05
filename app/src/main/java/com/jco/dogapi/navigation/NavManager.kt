@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.jco.dogapi.viewModel.DogViewModel
 import com.jco.dogapi.views.DogScreen
+import com.jco.dogapi.views.FavoriteImages
 
 @Composable
 fun NavManager(viewModel: DogViewModel, darkModeStore: StoreDarkMode, darkMode:Boolean){
@@ -17,8 +18,8 @@ fun NavManager(viewModel: DogViewModel, darkModeStore: StoreDarkMode, darkMode:B
         composable("Home") {
             DogScreen(navController, viewModel, darkModeStore, darkMode)
         }
-//        composable("Home2"){
-//            HomeView(navController, viewModel)
-//        }
+        composable("favorites") {
+            FavoriteImages(navController, viewModel, darkModeStore, darkMode)
+        }
     }
 }

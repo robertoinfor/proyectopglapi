@@ -1,9 +1,8 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.android") // Kotlin ya está definido aquí, usará la versión 1.7.2 automáticamente
+    kotlin("kapt")
     id("com.google.dagger.hilt.android")
-
 }
 
 android {
@@ -43,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.3.2"
     }
     packaging {
         resources {
@@ -56,9 +55,10 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.7.7")
     implementation(libs.androidx.ui.test.android)
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.androidx.foundation.android)
     val nav_version = "2.6.0"
-    implementation ("androidx.datastore:datastore-preferences:1.0.0")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
     implementation("androidx.navigation:navigation-compose:$nav_version")
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.46.1")
@@ -73,10 +73,10 @@ dependencies {
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     // Para el uso de coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2") // Esta línea usa Kotlin 1.7.2
     // Retrofit
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-compose:2.3.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.1")
